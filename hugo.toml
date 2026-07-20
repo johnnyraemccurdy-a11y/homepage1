@@ -2,3 +2,4 @@ baseURL = 'https://kozono-jidousya-home.pages.dev'
 languageCode = 'ja-jp'
 title = '小園自動車商会'
 disableKinds = ['taxonomy','taxonomyTerm']
+publishDir = 'public'
