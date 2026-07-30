@@ -1,5 +1,129 @@
 {{ define "main" }}
-<div style="text-align: center;">
-  {{ .Content }}
-</div>
+<!-- 全体にまとめるコンテナ -->
+<dib class="homepage1-container">
+
+  <!-- 1.帯付きタイトル -->
+  <dib class="title-banner">
+    <h1>(有)小園自動車商会</h1>
+  </dib>
+
+  <!-- 2.写真のスライドショー(3枚の画像を切り替えるエリア) -->
+  <div class="slideshow-container">
+    <div class="slide fade"><img src="/images/photo1.jpg" alt="車検・整備の様子"></div>
+    <div class="slide fade"><img src="/images/photo2.jpg" alt="新車・中古車販売"></div>
+    <div class="slide fade"><img src="/images/photo3.jpg" alt="店舗外観"></div>
+  </div>
+
+  <!-- 3.写真のスライドショー(3枚の画像を切り替えるエリア) -->
+  <div class="new-box">
+    <h3>お知らせ</h3>
+    <p>ホームページを開設しました。車検や整備のご連絡はお気軽にお問合せください。</p>
+  </div>
+
+  <br><br>
+
+  <!-- 4.本文コンテンツ(住所や営業時間など) -->
+  <div class="shop-info">
+    {{ .Content }}
+  </div>
+
+</dib>
+
+<!-- デザイン (CSS) とスライドショーの動き　(javaScript) -->
+<style>
+  /* ページ全体の背景や文字の基本設定 */
+  body {
+  background-color: #f7f9fc;
+  color: #333333;
+  }
+
+  .homepage1-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  /*1. 帯付きタイトルのデザイン */
+  .title-banner {
+    background-color: #004080; /* 落ち着いた青色の帯 */
+    color: #ffffff;            /* 文字色：白 */
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;        /* 角を少し丸くする */
+    margin-bottom: 30px;
+  }
+
+  .title-banner h1 {
+    margin: 0;
+    font-size: 24px;
+  }
+
+  /* 2. スライドショーのデザイン */
+  .slideshow-container {
+    position: relative;
+    max-width: 100%;
+    height: 350px;              /*画像の高さを固定 */
+    margin: 0 auto 30px auto;
+    overflow: hidde;
+    border-radius: 8px;
+    background-color: #ddd;     /* 画像がない時の背景 */
+  }
+
+  .slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1s ease-in-out; /*ふわっと切り替えるアニメーション */
+  }
+
+  .slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;                  /*画像が崩れないように調整 */
+  }
+
+  /* 3. お知らせボックスのデザイン */
+  .news-box {
+    border: 2px solid #004080;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+    text-align: left;
+  }
+
+  .news-box h3 {
+    margin-top: 0;
+    color: #004080;
+    font-size: 18px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+  }
+
+  /* 4. 店舗情報(中央揃え・行間調整) */
+  .shop-info {
+    text-align: center;
+    line-height: 2.2;           /* 行間を広めに取る */
+  }
+</style>
+
+<!-- スライドショーを自動で動かすプログラム(javaScript) -->
+<script>
+  let slideIndex = 0;
+  function showSlides() {
+    let slides = document.getElementsByClassName("slide");
+    if (slides.length === 0) return;
+    for (let i = 0; i < slides.length; i++) {
+      slides[i].style.opacity = "0";
+    }
+    slideIndex++;
+    if (slideIndex > slides.length) {slideIndex = 1; }
+    slides[slideIndex - 1].style.opacity = "1";
+    setTimeout(showSlides, 4000); // 4秒ごとに画像を切り替え
+  }
+  document.addEventListener("DOMContentLoaded", function() {
+    showSlides();
+  });
+</script>
 {{ end }}
