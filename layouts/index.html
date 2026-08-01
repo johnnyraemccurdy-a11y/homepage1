@@ -1,33 +1,32 @@
 {{ define "main" }}
-<!-- 全体にまとめるコンテナ -->
-<div class="homepage1-container">
-
-  <!-- 1. 最上部のヘッダー（会社ロゴ＆会社名） -->
-  <div class="header-logo-area">
-    <div class="header-content">
-      <div class="header-logo">
-        <img src="/images/logo.png" alt="会社マーク" class="logo-img">
-      </div>
-      <div class="header-company-name">
-        <h1>(有)小園自動車商会</h1>
-      </div>
+<!-- 1. 最上部のヘッダー（画面の端から端まで広げるため、コンテナの外に出しています） -->
+<div class="header-logo-area">
+  <div class="header-content">
+    <div class="header-logo">
+      <img src="/images/logo.png" alt="会社マーク" class="logo-img">
+    </div>
+    <div class="header-company-name">
+      <h1>(有)小園自動車商会</h1>
     </div>
   </div>
+</div>
+
+<!-- 全体にまとめるコンテナ（ここから下に写真、お知らせ、店舗情報、カレンダーが入ります） -->
+<div class="homepage1-container">
 
   <!-- 2. 写真のスライドショーエリア -->
   <div class="slideshow-container">
-    <div class="slide fade"><img src="/images/1000019534.jpg" alt="スタッフ募集中"></div>
+    <div class="slide fade"><img src="/images/1000019519.jpg" alt="スタッフ募集中"></div>
     <div class="slide fade"><img src="/images/photo2.jpg" alt="新車・中古車販売"></div>
     <div class="slide fade"><img src="/images/photo3.jpg" alt="店舗外観"></div>
   </div>
 
-  <!-- 3. お知らせ欄（青枠で囲み、posts/index.md などの内容をスクロール表示） -->
+  <!-- 3. お知らせ欄（青枠＆スクロール） -->
   <div class="news-box">
     <h3>お知らせ</h3>
     <div class="news-scroll-content">
       <div class="news-item">
-        <!-- 下記の `.Site.GetPage` で別ファイルの文章をここに呼び出します -->
-        {{ $newsPage := .Site.GetPage "/posts/index.md" }}
+        {{ $newsPage := .Site.GetPage "posts/index.md" }}
         {{ if $newsPage }}
           <div class="news-text">{{ $newsPage.Content }}</div>
         {{ else }}
@@ -37,11 +36,52 @@
     </div>
   </div>
 
-  <br><br>
+  <br>
 
   <!-- 4. 下部の店舗情報 -->
   <div class="shop-info">
     {{ .Content }}
+  </div>
+
+  <br>
+
+  <!-- 5. 月ごとの営業日カレンダーエリア -->
+  <div class="calendar-box">
+    <h3>営業日カレンダー</h3>
+    <div class="calendar-table-wrapper">
+      <table class="calendar-table">
+        <caption>2026年 8月 営業日</caption>
+        <thead>
+          <tr>
+            <th class="sun">日</th>
+            <th>月</th>
+            <th>火</th>
+            <th>水</th>
+            <th>木</th>
+            <th>金</th>
+            <th class="sat">土</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td><td></td><td></td><td></td><td>1</td><td>2</td><td class="sat">3</td>
+          </tr>
+          <tr>
+            <td class="sun">4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td class="sat">10</td>
+          </tr>
+          <tr>
+            <td class="sun">11</td><td>12</td><td>13</td><td>14</td><td>15</td><td>16</td><td class="sat">17</td>
+          </tr>
+          <tr>
+            <td class="sun">18</td><td>19</td><td>20</td><td>21</td><td>22</td><td>23</td><td class="sat">24</td>
+          </tr>
+          <tr>
+            <td class="sun">25</td><td>26</td><td>27</td><td>28</td><td>29</td><td>30</td><td class="sat">31</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="calendar-note">※赤字・または背景色がついている日は定休日（日・祝日など）です。</p>
+    </div>
   </div>
 
 </div>
@@ -49,107 +89,32 @@
 <!-- デザイン（CSS）の設定 -->
 <style>
   /* 全体のスタイル */
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background-color: #f9f9f9;
+  }
+
   .homepage1-container {
     max-width: 800px;
     margin: 0 auto;
     padding: 20px;
-    font-family: sans-serif;
   }
 
-  /* 1. ヘッダー */
+  /* 1. ヘッダー（端から端まで広げる設定） */
   .header-logo-area {
     background-color: #004080;
-    padding: 15px 20px;
-    margin-bottom: 20px;
-    border-radius: 8px;
+    padding: 15px 30px;
+    margin-bottom: 30px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .header-content {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-  }
-
-  .header-logo {
-    margin-right: 20px;
-  }
-
-  .logo-img {
-    height: 50px;
-    width: auto;
-    display: block;
-  }
-
-  .header-company-name h1 {
-    margin: 0;
-    color: #ffffff;
-    font-size: 24px;
-  }
-
-  /* 2. スライドショー */
-  .slideshow-container {
-    position: relative;
-    max-width: 100%;
-    height: 350px;
-    margin: 0 auto 30px auto;
-    overflow: hidden;
-    border-radius: 8px;
-    background-color: #ddd;
-  }
-
-  .slide {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    display: none;
-  }
-
-  .slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .fade {
-    animation-name: fade;
-    animation-duration: 3s;
-  }
-
-  @keyframes fade {
-    from {opacity: .4}
-    to {opacity: 1}
-  }
-
-  /* 3. お知らせボックス（青枠＆スクロール） */
-  .news-box {
-    border: 2px solid #004080;
-    background-color: #ffffff;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 30px;
-    text-align: left;
-  }
-
-  .news-box h3 {
-    margin-top: 0;
-    color: #004080;
-    font-size: 18px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 8px;
-  }
-
-  .news-scroll-content {
-    max-height: 150px; /* スクロールする高さの制限 */
-    overflow-y: auto; /* 縦スクロール */
-    padding-right: 15px;
-    margin-top: 10px;
-  }
-
-  .news-item {
-    margin-bottom: 15px;
-    padding: 0 5px;
-  }
-
   .news-text {
     margin: 0;
     font-size: 15px;
@@ -161,6 +126,70 @@
   .shop-info {
     text-align: center;
     line-height: 1.6;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+  }
+
+  /* 5. 営業日カレンダーのデザイン */
+  .calendar-box {
+    background-color: #ffffff;
+    border: 2px solid #004080;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 30px;
+    text-align: center;
+  }
+
+  .calendar-box h3 {
+    margin-top: 0;
+    color: #004080;
+    font-size: 18px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+    text-align: left;
+  }
+
+  .calendar-table {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    border-collapse: collapse;
+    background-color: #fff;
+  }
+
+  .calendar-table caption {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 16px;
+  }
+
+  .calendar-table th, .calendar-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+  }
+
+  .calendar-table th {
+    background-color: #f0f4f8;
+    color: #333;
+  }
+
+  .calendar-table th.sun, .calendar-table td.sun {
+    color: #d9534f; /* 日曜日の赤字 */
+  }
+
+  .calendar-table th.sat, .calendar-table td.sat {
+    color: #0275d8; /* 土曜日の青字 */
+  }
+
+  .calendar-note {
+    font-size: 12px;
+    color: #666;
+    margin-top: 10px;
   }
 </style>
 
@@ -183,3 +212,4 @@
   }
 </script>
 {{ end }}
+
