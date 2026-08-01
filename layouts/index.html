@@ -1,64 +1,133 @@
 {{ define "main" }}
 <!-- 全体にまとめるコンテナ -->
-<dib class="homepage1-container">
+<div class="homepage1-container">
 
-  <!-- 1.帯付きタイトル -->
-<div class="header-logo-area">
-  <div class="header-content">
-    <!-- 左側のロゴ画像エリア -->
-    <div class="header-logo">
-      <img src="/images/logo.png" alt="会社マーク" class="logo-img">
-      <!-- ※ /images/logo.png は実際にアップロードしたファイル名に変えてください -->
-    </div>
-    <!-- 右側の会社名エリア -->
-    <div class="header-company-name">
-      <h1>(有)小園自動車商会</h1>
+  <!-- 1. 会社ロゴ＆マーク付きタイトルエリア -->
+  <div class="header-logo-area">
+    <div class="header-content">
+      <!-- 左側のロゴ画像エリア (※ファイル名は適宜変更してください) -->
+      <div class="header-logo">
+        <img src="/images/logo.png" alt="会社マーク" class="logo-img">
+      </div>
+      <!-- 右側の会社名エリア -->
+      <div class="header-company-name">
+        <h1>(有)小園自動車商会</h1>
+      </div>
     </div>
   </div>
+
+  <!-- 2. 写真のスライドショー(3枚の画像を切り替えるエリア) -->
+  <div class="slideshow-container">
+    <div class="slide fade"><img src="/images/1000019519.jpg" alt="スタッフ募集中"></div>
+    <div class="slide fade"><img src="/images/photo2.jpg" alt="新車・中古車販売"></div>
+    <div class="slide fade"><img src="/images/photo3.jpg" alt="店舗外観"></div>
+  </div>
+
+  <!-- 3. お知らせを四角い枠で囲み、内部をスクロールできるようにするエリア -->
+  <div class="news-box">
+    <h3>お知らせ</h3>
+    <div class="news-scroll-content">
+       <div class="news-item">
+        <div class="news-item">{{ .Content }}</div>
+       </div>  
+    </div>
+  </div>
+
+      <div class="news-item">
+        <span class="news-date">2026.07.15</span>
+        <p class="news-text">夏季休業のお知らせを掲載しました。詳細はスタッフまでお問い合わせください。</p>
+      </div>
+
+    </div>
+  </div>
+
+  <br><br>
+
+  <!-- 4. 本文コンテンツ(住所や営業時間など) -->
+  <div class="shop-info">
+    {{ .Content }}
+  </div>
+
 </div>
 
+<!-- デザイン（CSS）の設定をすべてここにまとめています -->
 <style>
-  /* 新しいデザイン用のCSS（styleタグの中に追記してください） */
+  /* 全体のスタイル */
+  .homepage1-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: sans-serif;
+  }
+
+  /* 1. ヘッダー（ロゴと会社名） */
   .header-logo-area {
-    background-color: #004080; /* 青色の帯の色 */
+    background-color: #004080;
     padding: 15px 20px;
     margin-bottom: 20px;
     border-radius: 8px;
   }
 
   .header-content {
-    display: flex; /* ロゴと文字を横並びにする */
-    align-items: center; /* 上下の中央揃え */
-    justify-content: center; /* 全体を中央に寄せる（左寄せの場合は flex-start に変えてください） */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* 左側に寄せたい場合は flex-start、中央の場合は center */
     max-width: 1000px;
     margin: 0 auto;
   }
 
   .header-logo {
-    margin-right: 20px; /* ロゴと文字の間の隙間 */
+    margin-right: 20px;
   }
 
   .logo-img {
-    height: 50px; /* ロゴ画像の高さを調整（いい感じのサイズにしてください） */
+    height: 50px;
     width: auto;
     display: block;
   }
 
   .header-company-name h1 {
     margin: 0;
-    color: #ffffff; /* 文字色：白 */
+    color: #ffffff;
     font-size: 24px;
   }
-</style>
 
-  <!-- 2.写真のスライドショー(3枚の画像を切り替えるエリア) -->
-  <div class="slideshow-container">
-    <div class="slide fade"><img src="/images/1000019534.jpg" alt="スタッフ募集中"></div>
-    <div class="slide fade"><img src="/images/photo2.jpg" alt="新車・中古車販売"></div>
-    <div class="slide fade"><img src="/images/photo3.jpg" alt="店舗外観"></div>
-  </div>
+  /* 2. スライドショー */
+  .slideshow-container {
+    position: relative;
+    max-width: 100%;
+    height: 350px;
+    margin: 0 auto 30px auto;
+    overflow: hidden;
+    border-radius: 8px;
+    background-color: #ddd;
+  }
 
-  /* 3. お知らせボックスのデザイン */
+  .slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: none;
+  }
+
+  .slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 写真が見切れる場合は contain に変更してください */
+  }
+
+  /* フェードアニメーション */
+  .fade {
+    animation-name: fade;
+    animation-duration: 3s;
+  }
+
+  @keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
+  }
+
+  /* 3. お知らせボックス */
   .news-box {
     border: 2px solid #004080;
     background-color: #ffffff;
@@ -76,21 +145,18 @@
     padding-bottom: 8px;
   }
 
-  /* お知らせのスクロールエリア */
   .news-scroll-content {
-    max-height: 150px; /* 枠の高さ（この高さを超えるとスクロールします） */
-    overflow-y: auto; /* 縦方向のみスクロールバーを表示 */
-    padding-right: 15px; /* スクロールバーと文章がくっつかないように右側に余白を確保 */
+    max-height: 150px;
+    overflow-y: auto;
+    padding-right: 15px;
     margin-top: 10px;
   }
 
-  /* 各お知らせの項目（左右に余裕を持たせる） */
   .news-item {
     margin-bottom: 15px;
-    padding: 0 5px; /* 左右のギリギリにならないよう余裕を持たせる */
+    padding: 0 5px;
   }
 
-  /* 日付のデザイン */
   .news-date {
     display: inline-block;
     font-size: 13px;
@@ -102,7 +168,6 @@
     font-weight: bold;
   }
 
-  /* お知らせの文章 */
   .news-text {
     margin: 0;
     font-size: 15px;
@@ -110,111 +175,29 @@
     line-height: 1.5;
   }
 
-
-  <br><br>
-
-  <!-- 4.本文コンテンツ(住所や営業時間など) -->
-  <div class="shop-info">
-    {{ .Content }}
-  </div>
-
-</dib>
-
-<!-- デザイン (CSS) とスライドショーの動き　(javaScript) -->
-<style>
-  /* ページ全体の背景や文字の基本設定 */
-  body {
-  background-color: #f7f9fc;
-  color: #333333;
-  }
-
-  .homepage1-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-
-  /*1. 帯付きタイトルのデザイン */
-  .title-banner {
-    background-color: #004080; /* 落ち着いた青色の帯 */
-    color: #ffffff;            /* 文字色：白 */
-    padding: 20px;
-    text-align: center;
-    border-radius: 8px;        /* 角を少し丸くする */
-    margin-bottom: 30px;
-  }
-
-  .title-banner h1 {
-    margin: 0;
-    font-size: 24px;
-  }
-
-  /* 2. スライドショーのデザイン */
-  .slideshow-container {
-    position: relative;
-    max-width: 100%;
-    height: 500px;              /*画像の高さを固定 */
-    margin: 0 auto 30px auto;
-    overflow: hidde;
-    border-radius: 8px;
-    background-color: #ddd;     /* 画像がない時の背景 */
-  }
-
-  .slide {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 1s ease-in-out; /*ふわっと切り替えるアニメーション */
-  }
-
-  .slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;                  /*画像が崩れないように調整 */
-  }
-
-  /* 3. お知らせボックスのデザイン */
-  .news-box {
-    border: 2px solid #004080;
-    background-color: #ffffff;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 30px;
-    text-align: left;
-  }
-
-  .news-box h3 {
-    margin-top: 0;
-    color: #004080;
-    font-size: 18px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 8px;
-  }
-
-  /* 4. 店舗情報(中央揃え・行間調整) */
+  /* 4. ショップ情報 */
   .shop-info {
-    text-align: center;
-    line-height: 2.2;           /* 行間を広めに取る */
+    text-align: left;
+    line-height: 1.6;
   }
 </style>
 
-<!-- スライドショーを自動で動かすプログラム(javaScript) -->
+<!-- スライドショーを自動で切り替えるためのJavaScript -->
 <script>
   let slideIndex = 0;
+  showSlides();
+
   function showSlides() {
     let slides = document.getElementsByClassName("slide");
-    if (slides.length === 0) return;
     for (let i = 0; i < slides.length; i++) {
-      slides[i].style.opacity = "0";
+      slides[i].style.display = "none";  
     }
     slideIndex++;
-    if (slideIndex > slides.length) {slideIndex = 1; }
-    slides[slideIndex - 1].style.opacity = "1";
-    setTimeout(showSlides, 5000); // 5秒ごとに画像を切り替え
+    if (slideIndex > slides.length) {slideIndex = 1}    
+    if (slides.length > 0) {
+      slides[slideIndex-1].style.display = "block";  
+      setTimeout(showSlides, 4000); // 4秒ごとに画像を切り替え
+    }
   }
-  document.addEventListener("DOMContentLoaded", function() {
-    showSlides();
-  });
 </script>
 {{ end }}
