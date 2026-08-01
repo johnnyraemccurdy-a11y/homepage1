@@ -21,26 +21,25 @@
     <div class="slide fade"><img src="/images/photo3.jpg" alt="店舗外観"></div>
   </div>
 
-  <!-- 3. お知らせ欄（ここだけを青枠で囲んでスクロールさせます） -->
+  <!-- 3. お知らせ欄（青枠で囲み、posts/index.md などの内容をスクロール表示） -->
   <div class="news-box">
     <h3>お知らせ</h3>
     <div class="news-scroll-content">
-      
-      <!-- お知らせの項目：増やしたいときはこの <div class="news-item"> ごとコピーして追加してください -->
       <div class="news-item">
-        <p class="news-text">
+        <!-- 下記の `.Site.GetPage` で別ファイルの文章をここに呼び出します -->
+        {{ $newsPage := .Site.GetPage "posts/index.md" }}
+        {{ if $newsPage }}
+          <div class="news-text">{{ $newsPage.Content }}</div>
+        {{ else }}
+          <p class="news-text">お知らせはありません。</p>
+        {{ end }}
       </div>
-
-      <div class="news-item">
-        <p class="news-text">
-      </div>
-
     </div>
   </div>
 
   <br><br>
 
-  <!-- 4. 下部の店舗情報（元々のデザイン通り、ここには余計なものが混ざりません） -->
+  <!-- 4. 下部の店舗情報 -->
   <div class="shop-info">
     {{ .Content }}
   </div>
@@ -149,17 +148,6 @@
   .news-item {
     margin-bottom: 15px;
     padding: 0 5px;
-  }
-
-  .news-date {
-    display: inline-block;
-    font-size: 13px;
-    color: #666666;
-    background-color: #f0f4f8;
-    padding: 2px 8px;
-    border-radius: 4px;
-    margin-bottom: 4px;
-    font-weight: bold;
   }
 
   .news-text {
