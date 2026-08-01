@@ -21,18 +21,17 @@
     <div class="slide fade"><img src="/images/photo3.jpg" alt="店舗外観"></div>
   </div>
 
-  <!-- お知らせ欄（青枠＆スクロールを確実に適用） -->
+  <!-- お知らせ欄（青枠＆スクロール＆確実に文字を表示） -->
   <div class="news-box">
     <h3>お知らせ</h3>
     <div class="news-scroll-content">
       <div class="news-item">
-        {{ $newsPage := .Site.GetPage "posts/index.md" }}
-        {{ if $newsPage }}
-          <!-- 改行タグを正しくHTMLとして反映させます -->
-          <div class="news-text">{{ $newsPage.Content | safeHTML }}</div>
-        {{ else }}
-          <p class="news-text">お知らせはありません。</p>
-        {{ end }}
+        <div class="news-text">
+          <span style="color: #666; font-size: 13px;">2026.08.01</span><br>
+          現在中東情勢により部品が入りづらくなっています。<br><br>
+          <span style="color: #666; font-size: 13px;">2026.08.01</span><br>
+          ホームページを開設しました。車検や整備の際はお気軽にお問い合わせください。
+        </div>
       </div>
     </div>
   </div>
@@ -150,7 +149,7 @@
     to {opacity: 1}
   }
 
-  /* お知らせボックス（青枠＆スクロールのスタイルを明示的に指定） */
+  /* お知らせボックス（青枠＆スクロール） */
   .news-box {
     border: 2px solid #004080;
     background-color: #ffffff;
@@ -251,11 +250,11 @@
   }
 
   .calendar-table th.sun, .calendar-table td.sun {
-    color: #d9534f; /* 日曜日の赤字 */
+    color: #d9534f;
   }
 
   .calendar-table th.sat, .calendar-table td.sat {
-    color: #333333; /* 土曜日の黒文字 */
+    color: #333333;
   }
 
   .cal-day-num {
@@ -356,3 +355,4 @@
   renderCalendar(currentYear, currentMonth);
 </script>
 {{ end }}
+
