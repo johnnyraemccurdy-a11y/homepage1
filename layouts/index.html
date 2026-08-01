@@ -16,19 +16,19 @@
 
   <!-- 写真のスライドショーエリア -->
   <div class="slideshow-container">
-    <div class="slide fade"><img src="/images/1000019534.jpg" alt="スタッフ募集中"></div>
+    <div class="slide fade"><img src="/images/1000019519.jpg" alt="スタッフ募集中"></div>
     <div class="slide fade"><img src="/images/photo2.jpg" alt="新車・中古車販売"></div>
     <div class="slide fade"><img src="/images/photo3.jpg" alt="店舗外観"></div>
   </div>
 
-  <!-- お知らせ欄（青枠＆スクロール） -->
+  <!-- お知らせ欄（青枠＆スクロールを確実に適用） -->
   <div class="news-box">
     <h3>お知らせ</h3>
     <div class="news-scroll-content">
       <div class="news-item">
         {{ $newsPage := .Site.GetPage "posts/index.md" }}
         {{ if $newsPage }}
-          <!-- 改行が確実に反映されるようにsafeHTMLを使用します -->
+          <!-- 改行タグを正しくHTMLとして反映させます -->
           <div class="news-text">{{ $newsPage.Content | safeHTML }}</div>
         {{ else }}
           <p class="news-text">お知らせはありません。</p>
@@ -46,7 +46,7 @@
 
   <br><br>
 
-  <!-- 営業日カレンダー（左右の＜＞で月を切り替え可能・土曜黒文字・上下二段表示対応） -->
+  <!-- 営業日カレンダー（月切り替え・土曜黒文字・上下二段表示） -->
   <div class="calendar-box">
     <h3>営業日カレンダー</h3>
     <div class="calendar-header-nav">
@@ -148,6 +148,43 @@
   @keyframes fade {
     from {opacity: .4}
     to {opacity: 1}
+  }
+
+  /* お知らせボックス（青枠＆スクロールのスタイルを明示的に指定） */
+  .news-box {
+    border: 2px solid #004080;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+    text-align: left;
+  }
+
+  .news-box h3 {
+    margin-top: 0;
+    color: #004080;
+    font-size: 18px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+  }
+
+  .news-scroll-content {
+    max-height: 150px;
+    overflow-y: auto;
+    padding-right: 15px;
+    margin-top: 10px;
+  }
+
+  .news-item {
+    margin-bottom: 15px;
+    padding: 0 5px;
+  }
+
+  .news-text {
+    margin: 0;
+    font-size: 15px;
+    color: #333333;
+    line-height: 1.6;
   }
 
   .shop-info {
@@ -252,10 +289,9 @@
     }
   }
 
-  // カレンダーの月切り替えロジック
   let today = new Date();
   let currentYear = today.getFullYear();
-  let currentMonth = today.getMonth(); // 0-11
+  let currentMonth = today.getMonth();
 
   function renderCalendar(year, month) {
     const titleElem = document.getElementById("calendar-title");
@@ -282,7 +318,6 @@
         } else {
           hasDay = true;
           let isSun = (j === 0);
-          // 定休日判定：日曜日、または祝日（必要に応じてここに判定を追加できます）
           let isHoliday = isSun; 
 
           let tdClass = "";
@@ -318,7 +353,6 @@
     renderCalendar(currentYear, currentMonth);
   }
 
-  // 初期表示
   renderCalendar(currentYear, currentMonth);
 </script>
 {{ end }}
