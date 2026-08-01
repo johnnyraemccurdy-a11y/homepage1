@@ -21,7 +21,7 @@
     <div class="slide fade"><img src="/images/photo3.jpg" alt="店舗外観"></div>
   </div>
 
-  <!-- お知らせ欄（青枠＆スクロール＆確実に文字を表示） -->
+  <!-- お知らせ欄（青枠＆スクロール） -->
   <div class="news-box">
     <h3>お知らせ</h3>
     <div class="news-scroll-content">
@@ -45,7 +45,7 @@
 
   <br><br>
 
-  <!-- 営業日カレンダー（月切り替え・土曜黒文字・上下二段表示） -->
+  <!-- 営業日カレンダー -->
   <div class="calendar-box">
     <h3>営業日カレンダー</h3>
     <div class="calendar-header-nav">
@@ -149,7 +149,6 @@
     to {opacity: 1}
   }
 
-  /* お知らせボックス（青枠＆スクロール） */
   .news-box {
     border: 2px solid #004080;
     background-color: #ffffff;
@@ -270,7 +269,7 @@
   }
 </style>
 
-<!-- スライドショー＆カレンダー切り替えスクリプト -->
+<!-- スライドショー＆カレンダー制御スクリプト -->
 <script>
   let slideIndex = 0;
   showSlides();
@@ -291,6 +290,14 @@
   let today = new Date();
   let currentYear = today.getFullYear();
   let currentMonth = today.getMonth();
+
+  // ▼【お盆休みや臨時の定休日を追加する場所】
+  // "YYYY-MM-DD" の形式で、お休みしたい日付をここに書き足してください。
+  const customHolidays = [
+    "2026-08-13", // 例：お盆休み初日
+    "2026-08-14", // 例：お盆休み中日
+    "2026-08-15" // 例：お盆休み最終日
+  ];
 
   function renderCalendar(year, month) {
     const titleElem = document.getElementById("calendar-title");
@@ -317,11 +324,23 @@
         } else {
           hasDay = true;
           let isSun = (j === 0);
-          let isHoliday = isSun; 
+
+          // 日付を "YYYY-MM-DD" の形式に組み立てます
+          let mm = String(month + 1).padStart(2, '0');
+          let dd = String(date).padStart(2, '0');
+          let dateStr = `${year}-${mm}-${dd}`;
+
+          // 日曜日、または個別に登録したお休み（お盆など）なら定休日とする
+          let isHoliday = isSun || customHolidays.includes(dateStr);
 
           let tdClass = "";
           if (isSun) tdClass = "sun";
           else if (j === 6) tdClass = "sat";
+
+          // 個別のお休みの日（お盆など）も日曜日と同様に赤文字にする場合
+          if (customHolidays.includes(dateStr) && !isSun) {
+            tdClass = "sun";
+          }
 
           rowHtml += `<td class="${tdClass}">`;
           rowHtml += `<span class="cal-day-num">${date}</span>`;
@@ -355,4 +374,3 @@
   renderCalendar(currentYear, currentMonth);
 </script>
 {{ end }}
-
