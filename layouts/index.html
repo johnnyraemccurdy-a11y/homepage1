@@ -58,11 +58,58 @@
     <div class="slide fade"><img src="/images/photo3.jpg" alt="店舗外観"></div>
   </div>
 
-  <!-- 3.写真のスライドショー(3枚の画像を切り替えるエリア) -->
-<!--  <div class="new-box"> -->
-<!--    <h3>お知らせ</h3> -->
-<!--    <p>ホームページを開設しました。車検や整備のご連絡はお気軽にお問合せください。</p> -->
-<!--  </div> -->
+  /* 3. お知らせボックスのデザイン */
+  .news-box {
+    border: 2px solid #004080;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+    text-align: left;
+  }
+
+  .news-box h3 {
+    margin-top: 0;
+    color: #004080;
+    font-size: 18px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+  }
+
+  /* お知らせのスクロールエリア */
+  .news-scroll-content {
+    max-height: 150px; /* 枠の高さ（この高さを超えるとスクロールします） */
+    overflow-y: auto; /* 縦方向のみスクロールバーを表示 */
+    padding-right: 15px; /* スクロールバーと文章がくっつかないように右側に余白を確保 */
+    margin-top: 10px;
+  }
+
+  /* 各お知らせの項目（左右に余裕を持たせる） */
+  .news-item {
+    margin-bottom: 15px;
+    padding: 0 5px; /* 左右のギリギリにならないよう余裕を持たせる */
+  }
+
+  /* 日付のデザイン */
+  .news-date {
+    display: inline-block;
+    font-size: 13px;
+    color: #666666;
+    background-color: #f0f4f8;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 4px;
+    font-weight: bold;
+  }
+
+  /* お知らせの文章 */
+  .news-text {
+    margin: 0;
+    font-size: 15px;
+    color: #333333;
+    line-height: 1.5;
+  }
+
 
   <br><br>
 
