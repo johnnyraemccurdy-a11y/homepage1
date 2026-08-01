@@ -1,5 +1,5 @@
 {{ define "main" }}
-<!-- 最上部のヘッダー（端から端まで広げる部分） -->
+<!-- 最上部のヘッダー（端から端まで広げる） -->
 <div class="header-logo-area">
   <div class="header-content">
     <div class="header-logo">
@@ -16,7 +16,7 @@
 
   <!-- 写真のスライドショーエリア -->
   <div class="slideshow-container">
-    <div class="slide fade"><img src="/images/1000019519.jpg" alt="スタッフ募集中"></div>
+    <div class="slide fade"><img src="/images/1000019534.jpg" alt="スタッフ募集中"></div>
     <div class="slide fade"><img src="/images/photo2.jpg" alt="新車・中古車販売"></div>
     <div class="slide fade"><img src="/images/photo3.jpg" alt="店舗外観"></div>
   </div>
@@ -28,7 +28,8 @@
       <div class="news-item">
         {{ $newsPage := .Site.GetPage "posts/index.md" }}
         {{ if $newsPage }}
-          <div class="news-text">{{ $newsPage.Content }}</div>
+          <!-- 改行が確実に反映されるようにsafeHTMLを使用します -->
+          <div class="news-text">{{ $newsPage.Content | safeHTML }}</div>
         {{ else }}
           <p class="news-text">お知らせはありません。</p>
         {{ end }}
@@ -45,12 +46,16 @@
 
   <br><br>
 
-  <!-- 一番下に追加した営業日カレンダーエリア -->
+  <!-- 営業日カレンダー（左右の＜＞で月を切り替え可能・土曜黒文字・上下二段表示対応） -->
   <div class="calendar-box">
     <h3>営業日カレンダー</h3>
-    <div class="calendar-table-wrapper">
+    <div class="calendar-header-nav">
+      <button onclick="changeMonth(-1)" class="cal-btn">＜</button>
+      <span id="calendar-title" style="font-weight: bold; font-size: 16px; color: #333;">2026年 8月 営業日</span>
+      <button onclick="changeMonth(1)" class="cal-btn">＞</button>
+    </div>
+    <div class="calendar-table-wrapper" style="margin-top: 10px;">
       <table class="calendar-table">
-        <caption>2026年 8月 営業日</caption>
         <thead>
           <tr>
             <th class="sun">日</th>
@@ -62,22 +67,8 @@
             <th class="sat">土</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
-            <td></td><td></td><td></td><td></td><td>1</td><td>2</td><td class="sat">3</td>
-          </tr>
-          <tr>
-            <td class="sun">4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td class="sat">10</td>
-          </tr>
-          <tr>
-            <td class="sun">11</td><td>12</td><td>13</td><td>14</td><td>15</td><td>16</td><td class="sat">17</td>
-          </tr>
-          <tr>
-            <td class="sun">18</td><td>19</td><td>20</td><td>21</td><td>22</td><td>23</td><td class="sat">24</td>
-          </tr>
-          <tr>
-            <td class="sun">25</td><td>26</td><td>27</td><td>28</td><td>29</td><td>30</td><td class="sat">31</td>
-          </tr>
+        <tbody id="calendar-body">
+          <!-- JavaScriptで動的にカレンダーが生成されます -->
         </tbody>
       </table>
     </div>
@@ -87,7 +78,6 @@
 
 <!-- デザイン（CSS）の設定 -->
 <style>
-  /* 全体のスタイル */
   .homepage1-container {
     max-width: 800px;
     margin: 0 auto;
@@ -95,7 +85,6 @@
     font-family: sans-serif;
   }
 
-  /* 最上部ヘッダー（端から端まで広げる） */
   .header-logo-area {
     background-color: #004080;
     padding: 15px 20px;
@@ -128,7 +117,6 @@
     font-size: 24px;
   }
 
-  /* スライドショー */
   .slideshow-container {
     position: relative;
     max-width: 100%;
@@ -162,50 +150,11 @@
     to {opacity: 1}
   }
 
-  /* お知らせボックス（青枠＆スクロール） */
-  .news-box {
-    border: 2px solid #004080;
-    background-color: #ffffff;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 30px;
-    text-align: left;
-  }
-
-  .news-box h3 {
-    margin-top: 0;
-    color: #004080;
-    font-size: 18px;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 8px;
-  }
-
-  .news-scroll-content {
-    max-height: 150px;
-    overflow-y: auto;
-    padding-right: 15px;
-    margin-top: 10px;
-  }
-
-  .news-item {
-    margin-bottom: 15px;
-    padding: 0 5px;
-  }
-
-  .news-text {
-    margin: 0;
-    font-size: 15px;
-    color: #333333;
-    line-height: 1.5;
-  }
-
-  /* 下部の店舗情報（元のレイアウトを維持） */
   .shop-info {
     text-align: center;
     line-height: 1.6;
   }
 
-  /* 一番下に追加したカレンダーのデザイン */
   .calendar-box {
     border: 2px solid #004080;
     background-color: #ffffff;
@@ -223,26 +172,40 @@
     padding-bottom: 8px;
   }
 
+  .calendar-header-nav {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .cal-btn {
+    background-color: #f0f4f8;
+    border: 1px solid #ddd;
+    padding: 5px 12px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 4px;
+    margin: 0 10px;
+  }
+
+  .cal-btn:hover {
+    background-color: #e2e8f0;
+  }
+
   .calendar-table {
     width: 100%;
-    max-width: 400px;
+    max-width: 450px;
     margin: 0 auto;
     border-collapse: collapse;
     background-color: #fff;
   }
 
-  .calendar-table caption {
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: #333;
-    font-size: 16px;
-  }
-
   .calendar-table th, .calendar-table td {
     border: 1px solid #ddd;
-    padding: 10px;
+    padding: 8px;
     text-align: center;
-    font-size: 14px;
+    font-size: 13px;
+    vertical-align: middle;
+    height: 45px;
   }
 
   .calendar-table th {
@@ -251,15 +214,27 @@
   }
 
   .calendar-table th.sun, .calendar-table td.sun {
-    color: #d9534f;
+    color: #d9534f; /* 日曜日の赤字 */
   }
 
   .calendar-table th.sat, .calendar-table td.sat {
-    color: #0275d8;
+    color: #333333; /* 土曜日の黒文字 */
+  }
+
+  .cal-day-num {
+    font-weight: bold;
+    display: block;
+  }
+
+  .cal-holiday-text {
+    font-size: 10px;
+    color: #d9534f;
+    display: block;
+    margin-top: 2px;
   }
 </style>
 
-<!-- スライドショーの自動切り替えスクリプト -->
+<!-- スライドショー＆カレンダー切り替えスクリプト -->
 <script>
   let slideIndex = 0;
   showSlides();
@@ -276,5 +251,74 @@
       setTimeout(showSlides, 4000);
     }
   }
+
+  // カレンダーの月切り替えロジック
+  let today = new Date();
+  let currentYear = today.getFullYear();
+  let currentMonth = today.getMonth(); // 0-11
+
+  function renderCalendar(year, month) {
+    const titleElem = document.getElementById("calendar-title");
+    const bodyElem = document.getElementById("calendar-body");
+    
+    titleElem.innerText = `${year}年 ${month + 1}月 営業日`;
+    bodyElem.innerHTML = "";
+
+    let firstDay = new Date(year, month, 1).getDay();
+    let lastDate = new Date(year, month + 1, 0).getDate();
+
+    let date = 1;
+    let html = "";
+
+    for (let i = 0; i < 6; i++) {
+      let rowHtml = "<tr>";
+      let hasDay = false;
+
+      for (let j = 0; j < 7; j++) {
+        if (i === 0 && j < firstDay) {
+          rowHtml += "<td></td>";
+        } else if (date > lastDate) {
+          rowHtml += "<td></td>";
+        } else {
+          hasDay = true;
+          let isSun = (j === 0);
+          // 定休日判定：日曜日、または祝日（必要に応じてここに判定を追加できます）
+          let isHoliday = isSun; 
+
+          let tdClass = "";
+          if (isSun) tdClass = "sun";
+          else if (j === 6) tdClass = "sat";
+
+          rowHtml += `<td class="${tdClass}">`;
+          rowHtml += `<span class="cal-day-num">${date}</span>`;
+          if (isHoliday) {
+            rowHtml += `<span class="cal-holiday-text">定休日</span>`;
+          }
+          rowHtml += `</td>`;
+          date++;
+        }
+      }
+      rowHtml += "</tr>";
+      if (hasDay) {
+        html += rowHtml;
+      }
+    }
+    bodyElem.innerHTML = html;
+  }
+
+  function changeMonth(direction) {
+    currentMonth += direction;
+    if (currentMonth > 11) {
+      currentMonth = 0;
+      currentYear++;
+    } else if (currentMonth < 0) {
+      currentMonth = 11;
+      currentYear--;
+    }
+    renderCalendar(currentYear, currentMonth);
+  }
+
+  // 初期表示
+  renderCalendar(currentYear, currentMonth);
 </script>
 {{ end }}
