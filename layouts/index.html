@@ -3,9 +3,53 @@
 <dib class="homepage1-container">
 
   <!-- 1.帯付きタイトル -->
-  <dib class="title-banner">
-    <h1>(有)小園自動車商会</h1>
-  </dib>
+<div class="header-logo-area">
+  <div class="header-content">
+    <!-- 左側のロゴ画像エリア -->
+    <div class="header-logo">
+      <img src="/images/logo.png" alt="会社マーク" class="logo-img">
+      <!-- ※ /images/logo.png は実際にアップロードしたファイル名に変えてください -->
+    </div>
+    <!-- 右側の会社名エリア -->
+    <div class="header-company-name">
+      <h1>(有)小園自動車商会</h1>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* 新しいデザイン用のCSS（styleタグの中に追記してください） */
+  .header-logo-area {
+    background-color: #004080; /* 青色の帯の色 */
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+  }
+
+  .header-content {
+    display: flex; /* ロゴと文字を横並びにする */
+    align-items: center; /* 上下の中央揃え */
+    justify-content: center; /* 全体を中央に寄せる（左寄せの場合は flex-start に変えてください） */
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .header-logo {
+    margin-right: 20px; /* ロゴと文字の間の隙間 */
+  }
+
+  .logo-img {
+    height: 50px; /* ロゴ画像の高さを調整（いい感じのサイズにしてください） */
+    width: auto;
+    display: block;
+  }
+
+  .header-company-name h1 {
+    margin: 0;
+    color: #ffffff; /* 文字色：白 */
+    font-size: 24px;
+  }
+</style>
 
   <!-- 2.写真のスライドショー(3枚の画像を切り替えるエリア) -->
   <div class="slideshow-container">
