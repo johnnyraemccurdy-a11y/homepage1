@@ -27,7 +27,7 @@
     <div class="news-scroll-content">
       <div class="news-item">
         <!-- 下記の `.Site.GetPage` で別ファイルの文章をここに呼び出します -->
-        {{ $newsPage := .Site.GetPage "posts/index.md" }}
+        {{ $newsPage := .Site.GetPage "/posts/index.md" }}
         {{ if $newsPage }}
           <div class="news-text">{{ $newsPage.Content }}</div>
         {{ else }}
