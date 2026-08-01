@@ -2,7 +2,7 @@
 <!-- 全体にまとめるコンテナ -->
 <div class="homepage1-container">
 
-  <!-- 1. 会社ロゴ＆マーク付きタイトルエリア -->
+  <!-- 1. 最上部のヘッダー（会社ロゴ＆会社名） -->
   <div class="header-logo-area">
     <div class="header-content">
       <div class="header-logo">
@@ -14,28 +14,35 @@
     </div>
   </div>
 
-  <!-- 2. 写真のスライドショー（ここに写真を復活させました） -->
+  <!-- 2. 写真のスライドショーエリア -->
   <div class="slideshow-container">
     <div class="slide fade"><img src="/images/1000019519.jpg" alt="スタッフ募集中"></div>
     <div class="slide fade"><img src="/images/photo2.jpg" alt="新車・中古車販売"></div>
     <div class="slide fade"><img src="/images/photo3.jpg" alt="店舗外観"></div>
   </div>
 
-  <!-- 3. お知らせエリア（ここに自由なお知らせ文言をスクロール表示） -->
+  <!-- 3. お知らせ欄（ここだけを青枠で囲んでスクロールさせます） -->
   <div class="news-box">
     <h3>お知らせ</h3>
     <div class="news-scroll-content">
+      
+      <!-- お知らせの項目：増やしたいときはこの <div class="news-item"> ごとコピーして追加してください -->
       <div class="news-item">
-        <!-- ここに直接お知らせ文言を書くか、自由に変更できます -->
         <span class="news-date">2026.08.01</span>
-        <p class="news-text">ホームページを開設しました。車検や整備のご予約はお気軽にお問い合わせください。</p>
+        <p class="news-text">現在中東情勢により部品が入りづらくなっています。ホームページを開設しました。車検や整備のご予約はお気軽にお問い合わせください。</p>
       </div>
+
+      <div class="news-item">
+        <span class="news-date">2026.07.15</span>
+        <p class="news-text">夏季休業のお知らせを掲載しました。詳細はスタッフまでお問い合わせください。</p>
+      </div>
+
     </div>
   </div>
 
   <br><br>
 
-  <!-- 4. 本文コンテンツ（店舗情報や募集要項：中央寄せに設定） -->
+  <!-- 4. 下部の店舗情報（元々のデザイン通り、ここには余計なものが混ざりません） -->
   <div class="shop-info">
     {{ .Content }}
   </div>
@@ -44,15 +51,15 @@
 
 <!-- デザイン（CSS）の設定 -->
 <style>
-  /* 全体のスタイル（幅を広めに調整） */
+  /* 全体のスタイル */
   .homepage1-container {
-    max-width: 900px;
+    max-width: 800px;
     margin: 0 auto;
     padding: 20px;
     font-family: sans-serif;
   }
 
-  /* 1. ヘッダー（ロゴと会社名） */
+  /* 1. ヘッダー */
   .header-logo-area {
     background-color: #004080;
     padding: 15px 20px;
@@ -82,11 +89,11 @@
     font-size: 24px;
   }
 
-  /* 2. スライドショー（サイズをしっかり確保） */
+  /* 2. スライドショー */
   .slideshow-container {
     position: relative;
     max-width: 100%;
-    height: 400px;
+    height: 350px;
     margin: 0 auto 30px auto;
     overflow: hidden;
     border-radius: 8px;
@@ -106,16 +113,68 @@
     object-fit: cover;
   }
 
-  /* 4. ショップ情報（中央寄せに修正） */
-  .shop-info {
-    text-align: center; /* 全体を中央寄せにします */
-    line-height: 1.6;
+  .fade {
+    animation-name: fade;
+    animation-duration: 3s;
   }
-  
-  /* 募集要項などの見出しやテキストも綺麗に中央に配置されるように調整 */
-  .shop-info h2, .shop-info h3 {
-    color: #333;
-    margin-top: 20px;
+
+  @keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
+  }
+
+  /* 3. お知らせボックス（青枠＆スクロール） */
+  .news-box {
+    border: 2px solid #004080;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 30px;
+    text-align: left;
+  }
+
+  .news-box h3 {
+    margin-top: 0;
+    color: #004080;
+    font-size: 18px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+  }
+
+  .news-scroll-content {
+    max-height: 150px; /* スクロールする高さの制限 */
+    overflow-y: auto; /* 縦スクロール */
+    padding-right: 15px;
+    margin-top: 10px;
+  }
+
+  .news-item {
+    margin-bottom: 15px;
+    padding: 0 5px;
+  }
+
+  .news-date {
+    display: inline-block;
+    font-size: 13px;
+    color: #666666;
+    background-color: #f0f4f8;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 4px;
+    font-weight: bold;
+  }
+
+  .news-text {
+    margin: 0;
+    font-size: 15px;
+    color: #333333;
+    line-height: 1.5;
+  }
+
+  /* 4. 下部の店舗情報エリア */
+  .shop-info {
+    text-align: center;
+    line-height: 1.6;
   }
 </style>
 
